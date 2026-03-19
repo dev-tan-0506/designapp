@@ -1,0 +1,18 @@
+{
+  "name": "@design-editor/worker",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsup src/worker.ts --format cjs --dts --out-dir dist",
+    "dev": "tsx watch src/worker.ts",
+    "lint": "eslint src --ext .ts --max-warnings 0",
+    "test": "vitest run --passWithNoTests",
+    "docker-build": "docker build -f Dockerfile ../.."
+  },
+  "dependencies": {
+    "@design-editor/common-types": "workspace:*",
+    "@design-editor/design-schema": "workspace:*",
+    "bullmq": "^5.41.0",
+    "ioredis": "^5.4.2"
+  }
+}

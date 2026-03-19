@@ -1,0 +1,21 @@
+{
+  "name": "@design-editor/design-schema",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./generated/index.js"
+  },
+  "types": "./generated/index.d.ts",
+  "scripts": {
+    "build": "prisma generate",
+    "lint": "eslint . --ext .ts --ignore-pattern generated/** --max-warnings 0 --no-error-on-unmatched-pattern",
+    "test": "vitest run --passWithNoTests",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.4.1"
+  }
+}
