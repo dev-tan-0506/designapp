@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-03-19T17:08:45+07:00
-last_updated: 2026-03-20T11:18:32+07:00
+last_updated: 2026-03-20T18:19:43+07:00
 project: design editor
 project_key: NOKEY
 tracking_system: file-system
@@ -48,11 +48,11 @@ development_status:
   epic-1: in-progress
   1-1-monorepo-foundation-and-development-environment: done
   1-2-canvas-renderer-and-element-foundation: done
-  1-3-canvas-navigation-new-design-and-zoom-pan: backlog
-  1-4-basic-shape-tools-rectangle-and-ellipse: backlog
-  1-5-text-element-create-and-edit-with-google-fonts: backlog
-  1-6-image-element-upload-and-place-at-full-resolution: backlog
-  1-7-element-selection-transform-and-z-order: backlog
+  1-3-canvas-navigation-new-design-and-zoom-pan: done
+  1-4-basic-shape-tools-rectangle-and-ellipse: done
+  1-5-text-element-create-and-edit-with-google-fonts: done
+  1-6-image-element-upload-and-place-at-full-resolution: done
+  1-7-element-selection-transform-and-z-order: ready-for-dev
   1-8-element-operations-copy-paste-duplicate-delete-and-undo-redo: backlog
   1-9-multi-select-align-and-distribute: backlog
   1-10-group-lock-visibility-and-smart-snap-guides: backlog

@@ -1,8 +1,11 @@
 import type { ImageElement } from '@design-editor/common-types';
 
-export function drawImageElement(
+import type { CachedImageState } from '../image-cache';
+
+function drawPlaceholder(
   context: CanvasRenderingContext2D,
   element: ImageElement,
+  label: string,
 ): void {
   context.fillStyle = '#d7dde3';
   context.fillRect(element.x, element.y, element.width, element.height);
@@ -23,8 +26,33 @@ export function drawImageElement(
   context.textAlign = 'center';
   context.textBaseline = 'middle';
   context.fillText(
-    element.alt || 'Image',
+    label,
     element.x + element.width / 2,
     element.y + element.height / 2,
+  );
+}
+
+export function drawImageElement(
+  context: CanvasRenderingContext2D,
+  element: ImageElement,
+  imageState?: CachedImageState,
+): void {
+  if (imageState?.status === 'loaded' && imageState.image) {
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.drawImage(
+      imageState.image,
+      element.x,
+      element.y,
+      element.width,
+      element.height,
+    );
+    return;
+  }
+
+  drawPlaceholder(
+    context,
+    element,
+    imageState?.status === 'error' ? (element.alt || 'Image unavailable') : (element.alt || 'Loading image'),
   );
 }

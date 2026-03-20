@@ -18,6 +18,7 @@ const sharedSchema = z.object({
   SENDGRID_API_KEY: z.string().min(1),
   API_URL: z.string().url(),
   NEXT_PUBLIC_API_URL: z.string().url(),
+  NEXT_PUBLIC_GOOGLE_FONTS_API_KEY: z.string().min(1).optional(),
   NEXTAUTH_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string().min(1),
 });
@@ -44,6 +45,7 @@ const apiWorkerSchema = sharedSchema.omit({
   NEXTAUTH_URL: true,
   NEXTAUTH_SECRET: true,
   NEXT_PUBLIC_API_URL: true,
+  NEXT_PUBLIC_GOOGLE_FONTS_API_KEY: true,
 });
 
 export type EnvTarget = 'web' | 'api' | 'worker';
@@ -68,6 +70,7 @@ export function validateEnv(target: EnvTarget): SharedEnv {
     SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
     API_URL: process.env.API_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_GOOGLE_FONTS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   };

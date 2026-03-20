@@ -80,4 +80,26 @@ describe('HitTester', () => {
     expect(result?.element.type).toBe('group');
     expect(result?.element.id).toBe('group-1');
   });
+
+  it('hit-tests rotated elements against their actual rotated footprint', () => {
+    const hitTester = new HitTester();
+    const rotatedElement: CanvasElement = {
+      id: 'rect-rotated',
+      name: 'Rotated Rect',
+      type: 'rect',
+      x: 120,
+      y: 120,
+      width: 200,
+      height: 80,
+      rotation: 45,
+      opacity: 1,
+      visible: true,
+      locked: false,
+      fill: '#2563eb',
+      cornerRadius: 0,
+    };
+
+    expect(hitTester.hitTest([rotatedElement], { x: 220, y: 160 })?.element.id).toBe('rect-rotated');
+    expect(hitTester.hitTest([rotatedElement], { x: 310, y: 110 })).toBeNull();
+  });
 });

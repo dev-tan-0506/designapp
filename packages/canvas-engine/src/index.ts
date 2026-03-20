@@ -4,3 +4,6 @@ export * from './element-factory';
 export * from './events';
 export * from './history-manager';
 export * from './hit-tester';
+export * from './image-cache';
+export * from './shape-creation';
+export * from './transform';

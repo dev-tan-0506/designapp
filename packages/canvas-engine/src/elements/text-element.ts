@@ -5,7 +5,9 @@ export function drawTextElement(
   element: TextElement,
 ): void {
   context.fillStyle = element.fill;
-  context.font = `${element.fontStyle} ${element.fontWeight} ${element.fontSize}px ${element.fontFamily}`;
+  context.font = `${element.fontStyle} ${element.fontWeight} ${element.fontSize}px ${toCanvasFontFamily(
+    element.fontFamily,
+  )}`;
   context.textAlign = element.textAlign;
   context.textBaseline = 'top';
 
@@ -18,6 +20,32 @@ export function drawTextElement(
         : element.x + element.width;
 
   lines.forEach((line, index) => {
-    context.fillText(line, x, element.y + index * element.fontSize * element.lineHeight);
+    const lineY = element.y + index * element.fontSize * element.lineHeight;
+    context.fillText(line, x, lineY);
+
+    if (!element.underline) {
+      return;
+    }
+
+    const metrics = context.measureText(line);
+    const lineStartX =
+      element.textAlign === 'left'
+        ? x
+        : element.textAlign === 'center'
+          ? x - metrics.width / 2
+          : x - metrics.width;
+
+    context.beginPath();
+    context.strokeStyle = element.fill;
+    context.lineWidth = Math.max(1, element.fontSize * 0.06);
+    context.moveTo(lineStartX, lineY + element.fontSize + 2);
+    context.lineTo(lineStartX + metrics.width, lineY + element.fontSize + 2);
+    context.stroke();
   });
+}
+
+function toCanvasFontFamily(fontFamily: string): string {
+  const normalizedFontFamily = fontFamily.includes(' ') ? `"${fontFamily}"` : fontFamily;
+
+  return `${normalizedFontFamily}, sans-serif`;
 }

@@ -51,6 +51,7 @@ export type TextElement = BaseCanvasElement & {
   fontSize: number;
   fontWeight: number;
   fontStyle: 'normal' | 'italic';
+  underline?: boolean;
   textAlign: CanvasTextAlign;
   fill: string;
   lineHeight: number;
@@ -60,8 +61,10 @@ export type ImageElement = BaseCanvasElement & {
   type: 'image';
   src: string;
   alt: string;
+  assetId?: string;
   intrinsicWidth: number;
   intrinsicHeight: number;
+  readUrlExpiresAt?: string;
 };
 
 export type GroupElement = BaseCanvasElement & {

@@ -1,5 +1,7 @@
 import type { CanvasBounds, CanvasElement, CanvasPoint } from '@design-editor/common-types';
 
+import { getSelectionBounds, isPointInElement } from './transform';
+
 export type HitTestResult = {
   element: CanvasElement;
   bounds: CanvasBounds;
@@ -17,7 +19,7 @@ export class HitTester {
       }
 
       const bounds = this.getBounds(element);
-      if (this.containsPoint(bounds, point)) {
+      if (this.containsPoint(element, point)) {
         if (element.type === 'group') {
           groupFallback ??= { element, bounds };
           continue;
@@ -31,20 +33,10 @@ export class HitTester {
   }
 
   getBounds(element: CanvasElement): CanvasBounds {
-    return {
-      x: element.x,
-      y: element.y,
-      width: element.width,
-      height: element.height,
-    };
+    return getSelectionBounds(element);
   }
 
-  private containsPoint(bounds: CanvasBounds, point: CanvasPoint): boolean {
-    return (
-      point.x >= bounds.x &&
-      point.x <= bounds.x + bounds.width &&
-      point.y >= bounds.y &&
-      point.y <= bounds.y + bounds.height
-    );
+  private containsPoint(element: CanvasElement, point: CanvasPoint): boolean {
+    return isPointInElement(element, point);
   }
 }

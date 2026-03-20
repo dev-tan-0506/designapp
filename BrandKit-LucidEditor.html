@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-highest": "#dee3ea",
+              "on-secondary-fixed-variant": "#004f53",
+              "on-tertiary-fixed-variant": "#4c00d3",
+              "inverse-primary": "#d4bbff",
+              "surface-variant": "#dee3ea",
+              "on-background": "#171c21",
+              "background": "#f7f9ff",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed-dim": "#d4bbff",
+              "on-surface": "#171c21",
+              "tertiary-container": "#774aff",
+              "on-secondary-fixed": "#002021",
+              "primary-container": "#8b3dff",
+              "secondary": "#00696e",
+              "on-error": "#ffffff",
+              "surface": "#f7f9ff",
+              "error": "#ba1a1a",
+              "outline-variant": "#cdc2d8",
+              "secondary-fixed-dim": "#3cdae2",
+              "primary": "#710fe5",
+              "inverse-on-surface": "#edf1f8",
+              "on-primary-fixed": "#270058",
+              "on-surface-variant": "#4b4456",
+              "surface-container-low": "#f0f4fb",
+              "primary-fixed": "#ebdcff",
+              "error-container": "#ffdad6",
+              "surface-dim": "#d6dae1",
+              "on-tertiary-container": "#f8f2ff",
+              "tertiary-fixed": "#e7deff",
+              "tertiary": "#5e0ef9",
+              "on-error-container": "#93000a",
+              "secondary-container": "#5ff4fc",
+              "outline": "#7c7387",
+              "on-tertiary-fixed": "#1e0060",
+              "surface-tint": "#7921ed",
+              "surface-container": "#eaeef5",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#63f7ff",
+              "on-primary-fixed-variant": "#5d00c2",
+              "surface-bright": "#f7f9ff",
+              "inverse-surface": "#2c3136",
+              "on-secondary-container": "#006e72",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#ccbeff",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#faf1ff",
+              "surface-container-high": "#e4e8f0"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar (Shared Component) -->
+<nav class="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black tracking-tighter text-violet-700">LucidEditor</span>
+<div class="hidden md:flex items-center gap-6 font-sans antialiased text-sm font-medium">
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="#">Templates</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="#">Features</a>
+<a class="text-slate-600 hover:text-slate-900 transition-colors duration-200" href="#">Learn</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/15">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder:text-on-surface-variant" placeholder="Search brands..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-5 py-2 rounded-full text-sm font-bold active:scale-95 transition-transform">Create a design</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User profile" data-alt="Close up professional portrait of a user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB92df9kEsENuMCHx93-lcs_QYVQz9eiBHw5u5qyiRuRiijjWm6Kq0IcoaRgJ7CWl33oc2rkrLRvCju5d1e7E1S_32cMP5ZdJ3z2U2H5Q5uF1RsCI0oN5h-b2aqGlX_JeLj1b5Nhk17e7YMyUm0yOnpqgnfGZFXtbS-DdaYPTOuW5YaJtSAkQjiIGxWJ84nogSWYqNwmPL3r2my9u4-_fdQ19J6cKKLdYbdGjRb2OFaxKa1t_G9poW7ZdHEzPORlYLRNZffpslao_Y"/>
+</div>
+</div>
+</nav>
+<div class="flex">
+<!-- SideNavBar (Shared Component) - Active: Brand Kit -->
+<aside class="h-screen w-64 fixed left-0 top-0 pt-16 flex flex-col gap-2 p-4 border-r border-slate-200 bg-slate-50 z-40">
+<div class="px-4 py-4 mb-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">L</div>
+<div>
+<p class="text-sm font-semibold tracking-tight text-on-surface">Personal Workspace</p>
+<p class="text-[10px] uppercase font-bold tracking-widest text-primary">Pro Plan</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-1 text-sm font-semibold tracking-tight">
+<a class="text-slate-500 px-4 py-2 hover:bg-slate-200 rounded-lg transition-all duration-200 ease-in-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span> Home
+                </a>
+<a class="text-slate-500 px-4 py-2 hover:bg-slate-200 rounded-lg transition-all duration-200 ease-in-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span> Projects
+                </a>
+<a class="text-slate-500 px-4 py-2 hover:bg-slate-200 rounded-lg transition-all duration-200 ease-in-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard_customize">dashboard_customize</span> Templates
+                </a>
+<a class="bg-violet-100 text-violet-800 rounded-lg px-4 py-2 flex items-center gap-3 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span> Brand Kit
+                </a>
+</nav>
+<div class="mt-auto border-t border-slate-200 pt-4 flex flex-col gap-1">
+<a class="text-slate-500 px-4 py-2 hover:bg-slate-200 rounded-lg transition-all duration-200 ease-in-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="delete">delete</span> Trash
+                </a>
+<a class="text-slate-500 px-4 py-2 hover:bg-slate-200 rounded-lg transition-all duration-200 ease-in-out flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span> Help
+                </a>
+<button class="mt-4 mx-2 bg-surface-container-high text-on-surface py-2 rounded-lg text-sm font-bold hover:bg-surface-container-highest transition-colors">Invite Members</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-8 bg-surface-container-low min-h-screen">
+<header class="mb-10 flex justify-between items-end">
+<div>
+<h1 class="text-3xl font-black tracking-tighter text-on-surface mb-2">Brand Kit</h1>
+<p class="text-on-surface-variant font-medium">Manage your brand identities and assets across all projects.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container-highest text-on-surface font-semibold text-sm hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="swap_horiz">swap_horiz</span>
+                        Switch Brand
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2 rounded-full bg-primary text-white font-bold text-sm shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                        New Brand Kit
+                    </button>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-6">
+<!-- Brand Selection & Status (Bento Element) -->
+<div class="col-span-12 lg:col-span-4 bg-white rounded-xl p-6 shadow-sm flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold tracking-tight">Active Brand</h2>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container text-[10px] font-black uppercase">Primary</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-low">
+<div class="w-16 h-16 rounded-lg bg-gradient-to-tr from-primary to-tertiary-container flex items-center justify-center text-white text-2xl font-black">L</div>
+<div>
+<p class="font-black text-lg text-on-surface">LucidEditor</p>
+<p class="text-xs text-on-surface-variant">Last updated 2 days ago</p>
+</div>
+</div>
+<div class="space-y-3">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Brand Guidelines</p>
+<div class="group p-3 rounded-lg border border-outline-variant/15 hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="description">description</span>
+<span class="text-sm font-semibold">Voice &amp; Tone.pdf</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors" data-icon="download">download</span>
+</div>
+<div class="group p-3 rounded-lg border border-outline-variant/15 hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="brush">brush</span>
+<span class="text-sm font-semibold">Usage Rules.pdf</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors" data-icon="download">download</span>
+</div>
+</div>
+</div>
+<!-- Logos Section -->
+<div class="col-span-12 lg:col-span-8 bg-white rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold tracking-tight">Logos</h2>
+<button class="text-primary text-xs font-bold uppercase tracking-widest hover:underline">Manage All</button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+<div class="aspect-square rounded-xl bg-surface-container-low flex flex-col items-center justify-center border-2 border-dashed border-outline-variant/40 hover:border-primary/50 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl text-outline mb-2 group-hover:text-primary transition-colors" data-icon="upload_file">upload_file</span>
+<span class="text-xs font-bold text-on-surface-variant group-hover:text-primary transition-colors">Upload Logo</span>
+</div>
+<div class="aspect-square rounded-xl bg-slate-900 flex items-center justify-center p-6 relative group">
+<img alt="Logo White" class="max-h-full object-contain filter invert opacity-90" data-alt="Abstract minimalist white logo on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY0MPEPhs8S448Yqn_JDH0_tYmqZiy_xNBbyqgkrKT7tLcizmjwPIvbXi_XDdDUUfFW_n9o6hVS1PLhkuGJ-bJbXLyI5-RQmy9yM0ZApEW4-4stHFbudPDiKmg1VAd5hSuG3jyTgphht-onvlNX-0u-TIh6An_3rWLyxhvEhGdx7KSvCPEisqMiUANCzMBQpbfv-6A-MK4voScFjiXBKKjU5LlI8YGBdTf5_tvSxGP--SSiJ8AV0N7-I6QEzWdnZT_sJxTO_Jsv5o"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity rounded-xl">
+<button class="w-8 h-8 rounded-full bg-white text-on-surface flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-sm" data-icon="edit">edit</span></button>
+<button class="w-8 h-8 rounded-full bg-white text-error flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-sm" data-icon="delete">delete</span></button>
+</div>
+</div>
+<div class="aspect-square rounded-xl bg-white border border-outline-variant/15 flex items-center justify-center p-6 relative group">
+<img alt="Logo Color" class="max-h-full object-contain" data-alt="Corporate logo design on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0u_5TIub-8zXVcePurPv5LmjtRmtvbCElnPxKaWXUm2ppG8ymw4k1i98zenBmhRH8quNhUfWU2zzGZg__jnnRzIzK-wYJz6y7gJKbG6kluTAloEUEwYbt9MsGdPbBq8-c1_lIKWgqfUWtEdkrJ3AvLsUJizXPxxdnMRPUEnYl0gtKOeEK5BzbJBt-13wmP9odpad5awSImCK90oWFvyCrBym7WkDtUBzpY-kCkF3XOy9_EFfpID9RebaQgCjC7H-u6dTdXYvtNSY"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity rounded-xl">
+<button class="w-8 h-8 rounded-full bg-white text-on-surface flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-sm" data-icon="edit">edit</span></button>
+<button class="w-8 h-8 rounded-full bg-white text-error flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-sm" data-icon="delete">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Colors Section -->
+<div class="col-span-12 lg:col-span-7 bg-white rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-lg font-bold tracking-tight">Brand Colors</h2>
+<p class="text-xs text-on-surface-variant font-medium">Click a hex code to copy or edit the value.</p>
+</div>
+<button class="bg-surface-container-high px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="palette">palette</span>
+                            Add Palette
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<p class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20 pb-2">Primary Palette</p>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg shadow-inner bg-primary"></div>
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface uppercase tracking-tight">Vivid Purple</p>
+<code class="text-[10px] font-mono bg-slate-100 px-1.5 py-0.5 rounded text-primary">#710FE5</code>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="content_copy">content_copy</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg shadow-inner bg-primary-container"></div>
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface uppercase tracking-tight">Light Lavender</p>
+<code class="text-[10px] font-mono bg-slate-100 px-1.5 py-0.5 rounded text-primary">#8B3DFF</code>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="content_copy">content_copy</span>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<p class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant border-b border-outline-variant/20 pb-2">Accent Palette</p>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg shadow-inner bg-secondary"></div>
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface uppercase tracking-tight">Deep Teal</p>
+<code class="text-[10px] font-mono bg-slate-100 px-1.5 py-0.5 rounded text-secondary">#00696E</code>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="content_copy">content_copy</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg shadow-inner bg-tertiary"></div>
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface uppercase tracking-tight">Electric Blue</p>
+<code class="text-[10px] font-mono bg-slate-100 px-1.5 py-0.5 rounded text-tertiary">#5E0EF9</code>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm" data-icon="content_copy">content_copy</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fonts Section -->
+<div class="col-span-12 lg:col-span-5 bg-white rounded-xl p-6 shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-lg font-bold tracking-tight">Brand Fonts</h2>
+<button class="text-primary text-sm font-bold"><span class="material-symbols-outlined text-lg align-middle" data-icon="add_circle">add_circle</span></button>
+</div>
+<div class="space-y-6 flex-1">
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 relative overflow-hidden group">
+<div class="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-lg" data-icon="settings">settings</span></button>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Heading • <span class="text-primary">Inter Bold</span></p>
+<p class="text-2xl font-black tracking-tight text-on-surface leading-none">The Future of Content Creation</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 relative group">
+<div class="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-lg" data-icon="settings">settings</span></button>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Subheading • <span class="text-primary">Inter Medium</span></p>
+<p class="text-lg font-medium tracking-tight text-on-surface-variant">Editorial design with precision and soul.</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 relative group">
+<div class="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-lg" data-icon="settings">settings</span></button>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-2">Body • <span class="text-primary">Inter Regular</span></p>
+<p class="text-sm leading-relaxed text-on-surface-variant line-clamp-2">Our mission is to empower creators with tools that vanish into the background, leaving only the work to shine.</p>
+</div>
+</div>
+<div class="mt-6">
+<button class="w-full py-2 bg-surface-container-high rounded-lg text-sm font-bold text-on-surface hover:bg-surface-container-highest transition-colors">Manage Custom Fonts</button>
+</div>
+</div>
+<!-- Collaborative Brands (Asymmetric Section) -->
+<div class="col-span-12 mt-4">
+<h3 class="text-sm font-black uppercase tracking-[0.2em] text-on-surface-variant mb-6 flex items-center gap-3">
+                        Other Brand Kits
+                        <div class="h-px flex-1 bg-outline-variant/20"></div>
+</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white p-4 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-white font-black">N</div>
+<div>
+<p class="text-sm font-bold">NexGen AI</p>
+<p class="text-[10px] text-on-surface-variant">Shared with 4 members</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center text-white font-black">S</div>
+<div>
+<p class="text-sm font-bold">Solaris Inc</p>
+<p class="text-[10px] text-on-surface-variant">Active Project</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center text-white font-black">V</div>
+<div>
+<p class="text-sm font-bold">Vertex Labs</p>
+<p class="text-[10px] text-on-surface-variant">View Only</p>
+</div>
+</div>
+<div class="bg-surface-container-low border-2 border-dashed border-outline-variant/30 p-4 rounded-xl flex items-center justify-center gap-2 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span class="text-xs font-bold uppercase tracking-widest">Connect Brand</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

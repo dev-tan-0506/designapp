@@ -3,6 +3,16 @@ import type { CanvasElement, CanvasSize, DesignDocument } from '@design-editor/c
 import { dispatchCanvasRendered } from './events';
 import { ElementFactory } from './element-factory';
 import { HitTester, type HitTestResult } from './hit-tester';
+import { ImageCache } from './image-cache';
+import { drawImageElement } from './elements/image-element';
+import {
+  clampZoom,
+  fitViewportToCanvas,
+  sanitizeStageSize,
+  screenToCanvasPoint,
+  zoomViewportAtPoint,
+  type ViewportState,
+} from './viewport';
 
 const DEFAULT_CANVAS_SIZE: CanvasSize = {
   width: 1200,
@@ -14,6 +24,7 @@ export type CanvasRendererOptions = {
   getDevicePixelRatio?: () => number;
   requestFrame?: (callback: FrameRequestCallback) => number;
   cancelFrame?: (handle: number) => void;
+  imageCache?: ImageCache;
 };
 
 export type RenderStats = {
@@ -21,6 +32,8 @@ export type RenderStats = {
   lastDurationMs: number;
   scheduledFrames: number;
 };
+
+export type { ViewportState };
 
 export class CanvasRenderer {
   private readonly canvas: HTMLCanvasElement;
@@ -31,15 +44,24 @@ export class CanvasRenderer {
   private readonly getDevicePixelRatio: () => number;
   private readonly requestFrame: (callback: FrameRequestCallback) => number;
   private readonly cancelFrame: (handle: number) => void;
+  private readonly imageCache: ImageCache;
+  private readonly handleImageStateChange = () => {
+    this.invalidate();
+  };
 
   private document: DesignDocument | null = null;
-  private logicalSize: CanvasSize = DEFAULT_CANVAS_SIZE;
   private pixelRatio = 1;
   private frameHandle: number | null = null;
   private dirty = false;
   private renderCount = 0;
   private lastDurationMs = 0;
   private scheduledFrames = 0;
+  private previewElement: CanvasElement | null = null;
+  private viewport: ViewportState = {
+    zoom: 1,
+    pan: { x: 0, y: 0 },
+    stageSize: DEFAULT_CANVAS_SIZE,
+  };
 
   constructor(canvas: HTMLCanvasElement, options: CanvasRendererOptions = {}) {
     const context = canvas.getContext('2d');
@@ -54,21 +76,92 @@ export class CanvasRenderer {
     this.getDevicePixelRatio = options.getDevicePixelRatio ?? (() => window.devicePixelRatio || 1);
     this.requestFrame = options.requestFrame ?? window.requestAnimationFrame.bind(window);
     this.cancelFrame = options.cancelFrame ?? window.cancelAnimationFrame.bind(window);
+    this.imageCache = options.imageCache ?? new ImageCache();
 
-    this.applyCanvasScale(this.logicalSize);
+    this.applyCanvasScale(this.viewport.stageSize);
   }
 
   setDocument(document: DesignDocument): void {
     this.document = document;
-    this.logicalSize = document.canvas;
-    this.applyCanvasScale(this.logicalSize);
+    this.invalidate();
+  }
+
+  setPreviewElement(element: CanvasElement | null): void {
+    this.previewElement = element;
     this.invalidate();
   }
 
   resize(size: CanvasSize): void {
-    this.logicalSize = size;
-    this.applyCanvasScale(size);
+    this.viewport = {
+      ...this.viewport,
+      stageSize: sanitizeStageSize(size),
+    };
+    this.applyCanvasScale(this.viewport.stageSize);
     this.invalidate();
+  }
+
+  setViewport(viewport: ViewportState): ViewportState {
+    this.viewport = {
+      zoom: clampZoom(viewport.zoom),
+      pan: { ...viewport.pan },
+      stageSize: sanitizeStageSize(viewport.stageSize),
+    };
+    this.applyCanvasScale(this.viewport.stageSize);
+    this.invalidate();
+
+    return this.getViewport();
+  }
+
+  getViewport(): ViewportState {
+    return {
+      zoom: this.viewport.zoom,
+      pan: { ...this.viewport.pan },
+      stageSize: { ...this.viewport.stageSize },
+    };
+  }
+
+  setZoom(zoom: number, screenPoint?: { x: number; y: number }): ViewportState {
+    this.viewport = screenPoint
+      ? zoomViewportAtPoint(this.viewport, zoom, screenPoint)
+      : {
+          ...this.viewport,
+          zoom: clampZoom(zoom),
+        };
+    this.invalidate();
+
+    return this.getViewport();
+  }
+
+  zoomBy(multiplier: number, screenPoint?: { x: number; y: number }): ViewportState {
+    return this.setZoom(this.viewport.zoom * multiplier, screenPoint);
+  }
+
+  panBy(delta: { x: number; y: number }): ViewportState {
+    this.viewport = {
+      ...this.viewport,
+      pan: {
+        x: this.viewport.pan.x + delta.x,
+        y: this.viewport.pan.y + delta.y,
+      },
+    };
+    this.invalidate();
+
+    return this.getViewport();
+  }
+
+  fitToViewport(padding = 0): ViewportState | null {
+    if (!this.document) {
+      return null;
+    }
+
+    this.viewport = fitViewportToCanvas(this.document.canvas, this.viewport.stageSize, padding);
+    this.invalidate();
+
+    return this.getViewport();
+  }
+
+  screenToCanvas(screenPoint: { x: number; y: number }): { x: number; y: number } {
+    return screenToCanvasPoint(this.viewport, screenPoint);
   }
 
   invalidate(): void {
@@ -101,15 +194,29 @@ export class CanvasRenderer {
 
     this.context.save();
     this.context.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
-    this.context.clearRect(0, 0, this.logicalSize.width, this.logicalSize.height);
+    this.context.clearRect(0, 0, this.viewport.stageSize.width, this.viewport.stageSize.height);
 
     if (this.document) {
+      this.context.save();
+      this.context.setTransform(
+        this.pixelRatio * this.viewport.zoom,
+        0,
+        0,
+        this.pixelRatio * this.viewport.zoom,
+        this.pixelRatio * this.viewport.pan.x,
+        this.pixelRatio * this.viewport.pan.y,
+      );
       this.context.fillStyle = this.document.canvas.backgroundColor;
-      this.context.fillRect(0, 0, this.logicalSize.width, this.logicalSize.height);
+      this.context.fillRect(0, 0, this.document.canvas.width, this.document.canvas.height);
 
       for (const element of this.document.elements) {
         this.drawElement(element);
       }
+
+      if (this.previewElement) {
+        this.drawElement(this.previewElement);
+      }
+      this.context.restore();
     }
 
     this.context.restore();
@@ -132,7 +239,7 @@ export class CanvasRenderer {
       return null;
     }
 
-    return this.hitTester.hitTest(this.document.elements, { x, y });
+    return this.hitTester.hitTest(this.document.elements, this.screenToCanvas({ x, y }));
   }
 
   getRenderStats(): RenderStats {
@@ -166,6 +273,16 @@ export class CanvasRenderer {
       this.context.translate(-centerX, -centerY);
     }
 
+    if (element.type === 'image') {
+      drawImageElement(
+        this.context,
+        element,
+        this.imageCache.read(element.src, this.handleImageStateChange),
+      );
+      this.context.restore();
+      return;
+    }
+
     this.elementFactory.draw(this.context, element);
     this.context.restore();
   }
@@ -174,7 +291,7 @@ export class CanvasRenderer {
     const nextPixelRatio = Math.max(1, this.getDevicePixelRatio());
 
     if (nextPixelRatio !== this.pixelRatio) {
-      this.applyCanvasScale(this.logicalSize);
+      this.applyCanvasScale(this.viewport.stageSize);
     }
   }
 
