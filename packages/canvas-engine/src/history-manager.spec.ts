@@ -12,4 +12,29 @@ describe('HistoryManager', () => {
 
     expect(history.size()).toBe(100);
   });
+
+  it('returns previous snapshots through undo and redo', () => {
+    const history = new HistoryManager<number>();
+
+    history.push(1);
+    history.push(2);
+
+    expect(history.undo(3)).toBe(2);
+    expect(history.redo(2)).toBe(3);
+  });
+
+  it('clears redo history after a fresh push', () => {
+    const history = new HistoryManager<number>();
+
+    history.push(1);
+    history.push(2);
+
+    expect(history.undo(3)).toBe(2);
+    expect(history.redoSize()).toBe(1);
+
+    history.push(4);
+
+    expect(history.redoSize()).toBe(0);
+    expect(history.redo(4)).toBeNull();
+  });
 });

@@ -38,4 +38,8 @@ export class HistoryManager<T> {
   size(): number {
     return this.past.length;
   }
+
+  redoSize(): number {
+    return this.future.length;
+  }
 }

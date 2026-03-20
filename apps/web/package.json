@@ -10,10 +10,12 @@
     "docker-build": "docker build -f Dockerfile ../.."
   },
   "dependencies": {
+    "@design-editor/canvas-engine": "workspace:*",
     "@design-editor/common-types": "workspace:*",
     "@design-editor/ui": "workspace:*",
     "next": "^15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.8"
   }
 }

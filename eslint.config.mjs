@@ -5,7 +5,7 @@ const tsFiles = ['**/*.{ts,tsx,js,jsx,mjs,cjs}'];
 
 export default [
   {
-    ignores: ['**/dist/**', '**/.next/**', '**/node_modules/**'],
+    ignores: ['**/dist/**', '**/.next/**', '**/node_modules/**', '**/next-env.d.ts'],
   },
   {
     files: tsFiles,

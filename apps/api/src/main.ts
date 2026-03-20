@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { validateEnv } from '@design-editor/common-types';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';

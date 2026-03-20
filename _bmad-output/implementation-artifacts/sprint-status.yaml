@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-03-19T17:08:45+07:00
-last_updated: 2026-03-19T17:36:00+07:00
+last_updated: 2026-03-20T11:18:32+07:00
 project: design editor
 project_key: NOKEY
 tracking_system: file-system
@@ -46,8 +46,8 @@ development_status:
   # Epic 1: Core Design Editor — Create & Edit Designs (Phase 1)
   # ─────────────────────────────────────────────────────────────
   epic-1: in-progress
-  1-1-monorepo-foundation-and-development-environment: in-progress
-  1-2-canvas-renderer-and-element-foundation: backlog
+  1-1-monorepo-foundation-and-development-environment: done
+  1-2-canvas-renderer-and-element-foundation: done
   1-3-canvas-navigation-new-design-and-zoom-pan: backlog
   1-4-basic-shape-tools-rectangle-and-ellipse: backlog
   1-5-text-element-create-and-edit-with-google-fonts: backlog

@@ -1,6 +1,6 @@
 # Story 1.1: Monorepo Foundation & Development Environment `[INFRA]`
 
-Status: in-progress
+Status: done
 
 > **Note:** This is a prerequisite infrastructure story — no user-visible feature is delivered. It MUST be completed before any other stories can begin. All subsequent dev agents will assume this structure exists exactly as specified.
 
@@ -22,17 +22,17 @@ so that the entire team can run the full stack locally with a single command and
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Initialize Turborepo monorepo** (AC: #1, #6)
-  - [ ] Run: `pnpm dlx create-turbo@latest` in the project directory, select `pnpm` as package manager (Turborepo v2.8.18 — latest stable)
-  - [ ] **DO NOT** use the default app names from create-turbo — clear the `apps/` directory after scaffold and create the correct apps below
-  - [ ] Create `pnpm-workspace.yaml` with workspaces: `["apps/*", "packages/*"]`
-  - [ ] Configure `turbo.json` with tasks: `build`, `dev`, `lint`, `test` with correct dependency ordering (`"dependsOn": ["^build"]` for build)
+- [x] **Task 1: Initialize Turborepo monorepo** (AC: #1, #6)
+  - [x] Run: `pnpm dlx create-turbo@latest` in the project directory, select `pnpm` as package manager (Turborepo v2.8.18 — latest stable)
+  - [x] **DO NOT** use the default app names from create-turbo — clear the `apps/` directory after scaffold and create the correct apps below
+  - [x] Create `pnpm-workspace.yaml` with workspaces: `["apps/*", "packages/*"]`
+  - [x] Configure `turbo.json` with tasks: `build`, `dev`, `lint`, `test` with correct dependency ordering (`"dependsOn": ["^build"]` for build)
 
-- [ ] **Task 2: Create `apps/web` — Next.js 15** (AC: #1)
-  - [ ] `pnpm create next-app@latest apps/web --typescript --app --eslint --tailwind --no-src-dir --import-alias "@/*"`
-  - [ ] Enable Turbopack in `next.config.ts`: `experimental: { turbopack: true }` (Next.js 15 default dev bundler)
-  - [ ] Set `output: 'standalone'` in `next.config.ts` for Docker compatibility
-  - [ ] Create route group structure:
+- [x] **Task 2: Create `apps/web` — Next.js 15** (AC: #1)
+  - [x] `pnpm create next-app@latest apps/web --typescript --app --eslint --tailwind --no-src-dir --import-alias "@/*"`
+  - [x] Enable Turbopack in `next.config.ts`: `experimental: { turbopack: true }` (Next.js 15 default dev bundler)
+  - [x] Set `output: 'standalone'` in `next.config.ts` for Docker compatibility
+  - [x] Create route group structure:
     ```
     apps/web/app/
     ├── (marketing)/      ← SSG: landing, /templates/*, /explore
@@ -40,12 +40,12 @@ so that the entire team can run the full stack locally with a single command and
     ├── (auth)/           ← login, register
     └── (dashboard)/      ← protected user dashboard
     ```
-  - [ ] Add `apps/web/.env.local.example` with all required env vars
+  - [x] Add `apps/web/.env.local.example` with all required env vars
 
-- [ ] **Task 3: Create `apps/api` — NestJS 11** (AC: #1)
-  - [ ] `pnpm dlx @nestjs/cli@latest new apps/api --package-manager pnpm --skip-install`
-  - [ ] Remove default `apps/api/package.json` devDependencies already provided by root — use root workspace hoisting
-  - [ ] Create NestJS feature module skeleton directories (no implementation — just module files):
+- [x] **Task 3: Create `apps/api` — NestJS 11** (AC: #1)
+  - [x] `pnpm dlx @nestjs/cli@latest new apps/api --package-manager pnpm --skip-install`
+  - [x] Remove default `apps/api/package.json` devDependencies already provided by root — use root workspace hoisting
+  - [x] Create NestJS feature module skeleton directories (no implementation — just module files):
     ```
     apps/api/src/
     ├── auth/
@@ -54,19 +54,19 @@ so that the entire team can run the full stack locally with a single command and
     ├── export/
     └── admin/
     ```
-  - [ ] Each feature directory needs: `{feature}.module.ts`, `{feature}.controller.ts`, `{feature}.service.ts`
-  - [ ] Configure `apps/api/src/main.ts`: global prefix `/api/v1`, Helmet, CORS whitelist, ValidationPipe (whitelist: true, forbidNonWhitelisted: true)
-  - [ ] Add `apps/api/.env.example` with all required env vars
+  - [x] Each feature directory needs: `{feature}.module.ts`, `{feature}.controller.ts`, `{feature}.service.ts`
+  - [x] Configure `apps/api/src/main.ts`: global prefix `/api/v1`, Helmet, CORS whitelist, ValidationPipe (whitelist: true, forbidNonWhitelisted: true)
+  - [x] Add `apps/api/.env.example` with all required env vars
 
-- [ ] **Task 4: Create `apps/worker` — BullMQ consumer** (AC: #1)
-  - [ ] Create bare Node.js TypeScript app (no NestJS — just `worker.ts` consumer entry point)
-  - [ ] Install: `bullmq`, `ioredis`, `@design-editor/common-types` (workspace), `@design-editor/design-schema` (workspace)
-  - [ ] Worker consumes queues: `import-jobs`, `export-jobs`
-  - [ ] `apps/worker/tsconfig.json` extends root tsconfig
+- [x] **Task 4: Create `apps/worker` — BullMQ consumer** (AC: #1)
+  - [x] Create bare Node.js TypeScript app (no NestJS — just `worker.ts` consumer entry point)
+  - [x] Install: `bullmq`, `ioredis`, `@design-editor/common-types` (workspace), `@design-editor/design-schema` (workspace)
+  - [x] Worker consumes queues: `import-jobs`, `export-jobs`
+  - [x] `apps/worker/tsconfig.json` extends root tsconfig
 
-- [ ] **Task 5: Create shared packages** (AC: #5, #6)
+- [x] **Task 5: Create shared packages** (AC: #5, #6)
 
-  - [ ] **`packages/canvas-engine`**
+  - [x] **`packages/canvas-engine`**
     - Init as bare TypeScript package with `vitest` as test runner
     - `package.json` name: `"@design-editor/canvas-engine"`
     - Exports (stub / empty implementations only at this stage):
@@ -78,7 +78,7 @@ so that the entire team can run the full stack locally with a single command and
     - `tsconfig.json`: `"lib": ["ES2022", "DOM"]` — DOM needed for Canvas 2D types only
     - Add stub Vitest test to confirm test runner works
 
-  - [ ] **`packages/design-schema`**
+  - [x] **`packages/design-schema`**
     - Init Prisma 6: `pnpm dlx prisma@6 init --datasource-provider postgresql`
     - Schema at: `packages/design-schema/prisma/schema.prisma`
     - Prisma client generated into `packages/design-schema/generated/`
@@ -86,7 +86,7 @@ so that the entire team can run the full stack locally with a single command and
     - **DO NOT create any models yet** — models are added per-story as needed
     - Add `postinstall` script: `"prisma generate"` so it auto-generates on `pnpm install`
 
-  - [ ] **`packages/common-types`**
+  - [x] **`packages/common-types`**
     - Create `packages/common-types/src/env.ts` — Zod schema for ALL environment variables:
       ```typescript
       // Required in ALL apps:
@@ -98,23 +98,23 @@ so that the entire team can run the full stack locally with a single command and
     - Export shared TypeScript interfaces: `AsyncStatus` enum (`queued | processing | completed | failed`)
     - Export response wrapper types: `ApiResponse<T>`, `ApiError`
 
-  - [ ] **`packages/ui`**
+  - [x] **`packages/ui`**
     - Tailwind CSS 4 shared component package
     - Stub only — `Button`, `Input` components as no-ops for now
     - `package.json` name: `"@design-editor/ui"`
 
-- [ ] **Task 6: Configure root-level tooling** (AC: #7)
-  - [ ] Root `package.json` with `"private": true` and workspace-level `devDependencies`:
+- [x] **Task 6: Configure root-level tooling** (AC: #7)
+  - [x] Root `package.json` with `"private": true` and workspace-level `devDependencies`:
     - TypeScript 5.x (`strict: true` in `tsconfig.base.json`)
     - ESLint 9 with `@typescript-eslint/eslint-plugin`
     - Prettier with single config at root
     - Vitest (for packages), Jest (for NestJS api)
-  - [ ] `tsconfig.base.json` at root — all `tsconfig.json` files `"extends": "../../tsconfig.base.json"`
-  - [ ] Root `.eslintrc.js` — extends `@typescript-eslint/recommended`, no-unused-vars as error
-  - [ ] Root `.prettierrc` with: `{ "singleQuote": true, "trailingComma": "all", "tabWidth": 2, "semi": true }`
+  - [x] `tsconfig.base.json` at root — all `tsconfig.json` files `"extends": "../../tsconfig.base.json"`
+  - [x] Root `.eslintrc.js` — extends `@typescript-eslint/recommended`, no-unused-vars as error
+  - [x] Root `.prettierrc` with: `{ "singleQuote": true, "trailingComma": "all", "tabWidth": 2, "semi": true }`
 
-- [ ] **Task 7: Docker Compose for local dev** (AC: #2)
-  - [ ] `docker-compose.yml` at monorepo root with services:
+- [x] **Task 7: Docker Compose for local dev** (AC: #2)
+  - [x] `docker-compose.yml` at monorepo root with services:
     ```yaml
     postgres:
       image: postgres:16-alpine
@@ -128,21 +128,21 @@ so that the entire team can run the full stack locally with a single command and
       environment: { SERVICES: s3, DEFAULT_REGION: us-east-1 }
       ports: ["4566:4566"]
     ```
-  - [ ] Add `scripts/init-localstack.sh` to create the S3 bucket on localstack startup
+  - [x] Add `scripts/init-localstack.sh` to create the S3 bucket on localstack startup
 
-- [ ] **Task 8: GitHub Actions CI pipeline** (AC: #3)
-  - [ ] `.github/workflows/ci.yml` with jobs in sequence: `lint` → `test` → `build` → `docker-build`
-  - [ ] Enable Turborepo remote cache via `TURBO_TOKEN` and `TURBO_TEAM` secrets
-  - [ ] `docker-build` job only runs on `main` branch merge (trigger: `push: branches: [main]`)
-  - [ ] Each app has Dockerfile stub (multi-stage, Node.js 22 Alpine base)
+- [x] **Task 8: GitHub Actions CI pipeline** (AC: #3)
+  - [x] `.github/workflows/ci.yml` with jobs in sequence: `lint` → `test` → `build` → `docker-build`
+  - [x] Enable Turborepo remote cache via `TURBO_TOKEN` and `TURBO_TEAM` secrets
+  - [x] `docker-build` job only runs on `main` branch merge (trigger: `push: branches: [main]`)
+  - [x] Each app has Dockerfile stub (multi-stage, Node.js 22 Alpine base)
 
-- [ ] **Task 9: Verify complete setup** (AC: #1–7)
-  - [ ] `pnpm install` completes without errors
-  - [ ] `docker-compose up -d` → all 3 services healthy
-  - [ ] `pnpm dev` → all 3 apps start in watch mode
-  - [ ] `pnpm lint` → passes with no warnings in any package
-  - [ ] `pnpm test` → all stub tests pass (canvas-engine Vitest, api Jest health check)
-  - [ ] `pnpm build` → all apps build successfully
+- [x] **Task 9: Verify complete setup** (AC: #1–7)
+  - [x] `pnpm install` completes without errors
+  - [x] `docker-compose up -d` → all 3 services healthy
+  - [x] `pnpm dev` → all 3 apps start in watch mode
+  - [x] `pnpm lint` → passes with no warnings in any package
+  - [x] `pnpm test` → all stub tests pass (canvas-engine Vitest, api Jest health check)
+  - [x] `pnpm build` → all apps build successfully
 
 ## Dev Notes
 
@@ -374,6 +374,17 @@ GPT-5 Codex
 - 2026-03-19 17:33 ICT: `docker run --rm node:22-alpine node --version` failed because the Docker daemon is not running (`//./pipe/docker_engine` unavailable).
 - 2026-03-19 17:34 ICT: Static validation succeeded for all JSON manifests via `ConvertFrom-Json`.
 - 2026-03-19 17:34 ICT: `docker compose config` succeeded, confirming `docker-compose.yml` parses correctly.
+- 2026-03-20 09:12 ICT: `pnpm install` succeeded and `packages/design-schema` completed `prisma generate`.
+- 2026-03-20 09:18 ICT: `pnpm lint` failed because ESLint checked Next.js-managed `apps/web/next-env.d.ts`; fixed by ignoring `**/next-env.d.ts` in `eslint.config.mjs`.
+- 2026-03-20 09:20 ICT: Root `pnpm dev` probe showed Turborepo was not passing required env vars into `web`, `api`, and `worker`.
+- 2026-03-20 09:22 ICT: Added required startup env vars to `turbo.json` `globalEnv`; reran root dev probe and confirmed `web`, `api`, and `worker` boot together.
+- 2026-03-20 09:23 ICT: `docker compose up -d` and `docker compose ps` succeeded; PostgreSQL, Redis, and LocalStack were running and LocalStack recreated the `design-editor-dev` bucket.
+- 2026-03-20 09:26 ICT: `pnpm ls react zustand next --filter @design-editor/canvas-engine` returned no framework dependencies.
+- 2026-03-20 09:29 ICT: Final `pnpm lint` and `pnpm test` succeeded on the updated configuration.
+- 2026-03-20 09:31 ICT: `pnpm build` initially failed because leftover dev processes locked Prisma's Windows query engine; stopped the stray processes and reran `pnpm build` successfully.
+- 2026-03-20 10:00 ICT: Replaced `turbo.json` `globalEnv` with `globalPassThroughEnv` to preserve cacheability while still passing startup environment variables to dev processes.
+- 2026-03-20 10:02 ICT: Re-ran `pnpm lint`, `pnpm test`, `pnpm build`, and a root `pnpm dev` probe; all validations passed after the cache-safe Turborepo env fix.
+- 2026-03-20 10:10 ICT: Final review pass found no remaining review-blocking issues; story status advanced from `review` to `done`.
 
 ### Completion Notes List
 
@@ -385,12 +396,17 @@ GPT-5 Codex
 - Implemented `packages/common-types/src/env.ts` with fail-fast Zod validation, shared API types, and the required `AsyncStatus` enum.
 - Implemented `packages/canvas-engine` stub exports and a `HistoryManager` with the required 100-entry cap plus a Vitest smoke test.
 - Added Prisma schema scaffolding and generated-client placeholders in `packages/design-schema` so downstream workspace imports have a stable package target before actual `prisma generate`.
-- Full runtime validation is currently blocked by missing host Node/pnpm tooling and a stopped Docker daemon, so tasks remain unchecked and the story remains `in-progress`.
+- Updated `turbo.json` to pass required environment variables through Turborepo so root `pnpm dev` can launch `web`, `api`, and `worker` without failing startup validation.
+- Refined `turbo.json` to use cache-safe environment pass-through so local startup env vars no longer poison Turborepo task hashes.
+- Updated `eslint.config.mjs` to ignore Next.js-managed `next-env.d.ts`, allowing workspace lint to pass cleanly.
+- Validated Story 1.1 end-to-end with `pnpm install`, `docker compose up -d`, root `pnpm dev` probe, `pnpm lint`, `pnpm test`, `pnpm build`, and a dependency check confirming `@design-editor/canvas-engine` does not pull React, Zustand, or Next.js.
+- Closed the review loop after addressing the final Turborepo cacheability issue and marked Story 1.1 as done.
 
 ### File List
 
 - .env.example
 - .eslintrc.js
+- eslint.config.mjs
 - .github/workflows/ci.yml
 - .gitignore
 - .npmrc
@@ -481,3 +497,6 @@ GPT-5 Codex
 ### Change Log
 
 - 2026-03-19: Scaffolded the Story 1.1 monorepo foundation across root tooling, apps, packages, Docker, and CI; runtime validation remains blocked pending Node/pnpm availability and a running Docker daemon.
+- 2026-03-20: Completed runtime validation, fixed Turborepo env passthrough for root dev startup, excluded Next.js `next-env.d.ts` from ESLint, and verified install/lint/test/build plus Docker Compose health checks.
+- 2026-03-20: Addressed code-review feedback by switching Turborepo env propagation to `globalPassThroughEnv`, preserving cache behavior while keeping root dev startup working; story remains ready for review.
+- 2026-03-20: Verified the post-review fix set, found no remaining review-blocking issues, and advanced Story 1.1 to done.
